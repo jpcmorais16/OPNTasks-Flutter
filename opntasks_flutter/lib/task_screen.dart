@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:opntasks_flutter/pretask_screen.dart';
+
 class TaskScreen extends StatefulWidget {
   final String? idn;
-  const TaskScreen({super.key, this.idn});
+  const TaskScreen({super.key, required this.idn});
 
   @override
   State<TaskScreen> createState() => _TaskScreenState();
@@ -14,13 +16,6 @@ class _TaskScreenState extends State<TaskScreen> {
   String? opnTaskProduct;
   String? opnTaskInstitution;
   String? opnTaskQuantity;
-
-  Future<String> getTask() async {
-    var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
-        '/api/Task/CreateRandomTask', {'IDN': widget.idn});
-    var response = await http.get(url);
-    return response.body;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,8 @@ class _TaskScreenState extends State<TaskScreen> {
                   alignment: AlignmentGeometry.lerp(
                       Alignment.bottomLeft, Alignment.center, .04)!,
                   child: FloatingActionButton(
-                    onPressed: () => null,
+                    heroTag: "leftbutton",
+                    onPressed: () => {},
                     backgroundColor: Colors.red,
                   ),
                 ),
@@ -73,7 +69,8 @@ class _TaskScreenState extends State<TaskScreen> {
                   alignment: AlignmentGeometry.lerp(
                       Alignment.bottomRight, Alignment.center, .04)!,
                   child: FloatingActionButton(
-                    onPressed: () => null,
+                    heroTag: "rightbutton",
+                    onPressed: () => completeTask(),
                     backgroundColor: Colors.green,
                   ),
                 ),
@@ -113,5 +110,21 @@ class _TaskScreenState extends State<TaskScreen> {
         }),
       ),
     );
+  }
+
+  Future<String> getTask() async {
+    var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
+        '/api/Task/CreateRandomTask', {'IDN': widget.idn});
+    var response = await http.get(url);
+    Future.delayed(const Duration(seconds: 2));
+    return response.body;
+  }
+
+  void completeTask() async {
+    var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
+        '/api/Task/CompleteTask', {'IDN': widget.idn});
+    await http.post(url);
+    if (!mounted) return;
+    Navigator.pop(context);
   }
 }
