@@ -16,16 +16,16 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(BuildContext context, String idn) async {
     var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
         '/api/Login', {'IDN': idn});
-    var response = await http.post(url);
-    var user = convert.jsonDecode(response.body);
-    if (!mounted) return;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) =>
-            PreTaskScreen(idn: idn, hasTask: user["taskGoal"] != null),
-      ),
-    );
+    await http.post(url).then((response) async {
+      var user = convert.jsonDecode(response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              PreTaskScreen(idn: idn, hasTask: user["taskGoal"] != null),
+        ),
+      );
+    });
   }
 
   @override

@@ -8,11 +8,13 @@ class PreTaskScreen extends StatefulWidget {
   const PreTaskScreen({super.key, required this.hasTask, required this.idn});
 
   @override
-  State<PreTaskScreen> createState() => _PreTaskScreenState();
+  State<PreTaskScreen> createState() =>
+      _PreTaskScreenState(hasTask: this.hasTask);
 }
 
 class _PreTaskScreenState extends State<PreTaskScreen> {
-  //bool? hasTask = widget.hasTask;
+  bool? hasTask;
+  _PreTaskScreenState({required this.hasTask});
   @override
   Widget build(BuildContext context) {
     if (widget.hasTask!) {
@@ -22,6 +24,8 @@ class _PreTaskScreenState extends State<PreTaskScreen> {
           builder: (_) => TaskScreen(idn: widget.idn),
         ),
       );
+
+      hasTask = false;
     }
     return MaterialApp(
       home: Builder(
@@ -44,12 +48,16 @@ class _PreTaskScreenState extends State<PreTaskScreen> {
                   alignment: AlignmentGeometry.lerp(
                       Alignment.bottomCenter, Alignment.center, .05)!,
                   child: FloatingActionButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => TaskScreen(idn: widget.idn),
-                      ),
-                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => TaskScreen(idn: widget.idn),
+                        ),
+                      );
+
+                      hasTask = false;
+                    },
                   ),
                 )
               ],

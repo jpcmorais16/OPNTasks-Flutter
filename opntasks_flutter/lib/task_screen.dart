@@ -16,6 +16,8 @@ class _TaskScreenState extends State<TaskScreen> {
   String? opnTaskProduct;
   String? opnTaskInstitution;
   String? opnTaskQuantity;
+  // ignore: avoid_init_to_null
+  var task = null;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       Alignment.bottomLeft, Alignment.center, .04)!,
                   child: FloatingActionButton(
                     heroTag: "leftbutton",
-                    onPressed: () => {},
+                    onPressed: () => cancelTask(),
                     backgroundColor: Colors.red,
                   ),
                 ),
@@ -113,18 +115,30 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   Future<String> getTask() async {
-    var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
-        '/api/Task/CreateRandomTask', {'IDN': widget.idn});
-    var response = await http.get(url);
-    Future.delayed(const Duration(seconds: 2));
-    return response.body;
+    if (task == null) {
+      var url = Uri.http(
+          'Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
+          '/api/Task/CreateRandomTask',
+          {'IDN': widget.idn});
+      var response = await http.get(url);
+      print("aqui");
+      Future.delayed(const Duration(seconds: 2));
+      task = response.body;
+      return task;
+    } else {
+      return task;
+    }
   }
 
-  void completeTask() async {
+  void completeTask() {
     var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
         '/api/Task/CompleteTask', {'IDN': widget.idn});
-    await http.post(url);
-    if (!mounted) return;
-    Navigator.pop(context);
+    http.post(url).then((_) => Navigator.pop(context));
+  }
+
+  void cancelTask() {
+    var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
+        '/api/Task/CancelTask', {'IDN': widget.idn});
+    http.put(url).then((_) => Navigator.pop(context));
   }
 }
