@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:opntasks_flutter/login_screen.dart';
-import 'package:opntasks_flutter/pretask_screen.dart';
+import 'package:opn_flutter/firebase_options.dart';
+
+import 'login_screen.dart';
 import 'task_screen.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 

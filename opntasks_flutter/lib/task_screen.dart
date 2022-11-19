@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import 'package:opntasks_flutter/pretask_screen.dart';
-
 class TaskScreen extends StatefulWidget {
   final String? idn;
   const TaskScreen({super.key, required this.idn});
@@ -18,6 +16,7 @@ class _TaskScreenState extends State<TaskScreen> {
   String? opnTaskQuantity;
   // ignore: avoid_init_to_null
   var task = null;
+  bool isRequesting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,9 @@ class _TaskScreenState extends State<TaskScreen> {
                       Alignment.bottomLeft, Alignment.center, .04)!,
                   child: FloatingActionButton(
                     heroTag: "leftbutton",
-                    onPressed: () => cancelTask(),
+                    onPressed: () {
+                      if (!isRequesting) cancelTask();
+                    },
                     backgroundColor: Colors.red,
                   ),
                 ),
@@ -72,7 +73,9 @@ class _TaskScreenState extends State<TaskScreen> {
                       Alignment.bottomRight, Alignment.center, .04)!,
                   child: FloatingActionButton(
                     heroTag: "rightbutton",
-                    onPressed: () => completeTask(),
+                    onPressed: () {
+                      if (!isRequesting) completeTask();
+                    },
                     backgroundColor: Colors.green,
                   ),
                 ),
@@ -131,14 +134,18 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   void completeTask() {
+    isRequesting = true;
     var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
         '/api/Task/CompleteTask', {'IDN': widget.idn});
     http.post(url).then((_) => Navigator.pop(context));
+    isRequesting = false;
   }
 
   void cancelTask() {
+    isRequesting = true;
     var url = Uri.http('Teste-env.eba-tcxtgrep.us-east-1.elasticbeanstalk.com',
         '/api/Task/CancelTask', {'IDN': widget.idn});
     http.put(url).then((_) => Navigator.pop(context));
+    isRequesting = false;
   }
 }

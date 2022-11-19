@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:opntasks_flutter/task_screen.dart';
+import 'package:opn_flutter/task_screen.dart';
 
 class PreTaskScreen extends StatefulWidget {
-  final bool? hasTask;
+  final bool? hasTaskInitially;
   final String? idn;
-  const PreTaskScreen({super.key, required this.hasTask, required this.idn});
+  const PreTaskScreen(
+      {super.key, required this.hasTaskInitially, required this.idn});
 
   @override
   State<PreTaskScreen> createState() =>
-      _PreTaskScreenState(hasTask: this.hasTask);
+      _PreTaskScreenState(hasTask: this.hasTaskInitially);
 }
 
 class _PreTaskScreenState extends State<PreTaskScreen> {
@@ -17,7 +18,7 @@ class _PreTaskScreenState extends State<PreTaskScreen> {
   _PreTaskScreenState({required this.hasTask});
   @override
   Widget build(BuildContext context) {
-    if (widget.hasTask!) {
+    if (widget.hasTaskInitially!) {
       Navigator.push(
         context,
         MaterialPageRoute(

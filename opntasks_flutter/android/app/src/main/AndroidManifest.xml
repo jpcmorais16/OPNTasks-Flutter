@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.opntasks_flutter">
+    package="com.example.opn_flutter">
    <application
-        android:label="opntasks_flutter"
+        android:label="opn_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

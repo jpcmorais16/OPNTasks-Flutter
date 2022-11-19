@@ -1,4 +1,4 @@
-package com.example.opntasks_flutter
+package com.example.opn_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 

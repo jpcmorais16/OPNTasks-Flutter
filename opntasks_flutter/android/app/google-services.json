@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "12359298351",
+    "project_id": "opn-tasks",
+    "storage_bucket": "opn-tasks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12359298351:android:e67f0dcee551a010e305da",
+        "android_client_info": {
+          "package_name": "com.example.opn_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12359298351-df3209h5uhl6sb7evca7v0kmecb3kmt5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7jhwjbv3uDB4O-P5qwU93iz2HJSkG5BA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12359298351-df3209h5uhl6sb7evca7v0kmecb3kmt5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
